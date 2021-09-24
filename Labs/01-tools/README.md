@@ -23,15 +23,15 @@ I believe that I will eventually get to try out the Logic Analzyer in the upcomi
 
 ### Copy of modified `main.c` file
 ```C
-#define LED_GREEN   PB5 // AVR pin where green LED is connected
-#define RESET_DELAY	4000	// Delay in milliseconds
-#define PAUSE_DELAY	1000 // Delay in milliseconds
-#define SHORT_DELAY 200 // Delay in milliseconds
-#define LONG_DELAY	600 // Delay in milliseconds
-#ifndef F_CPU           // Preprocessor directive allows for conditional
-                        // compilation. The #ifndef means "if not defined".
-# define F_CPU 16000000 // CPU frequency in Hz required for delay
-#endif                  // The #ifndef directive must be closed by #endif
+#define LED_GREEN   PB5 	// AVR pin where green LED is connected
+#define RESET_DELAY 4000	// Delay in milliseconds
+#define PAUSE_DELAY 1000 	// Delay in milliseconds
+#define SHORT_DELAY 200 	// Delay in milliseconds
+#define LONG_DELAY 600 		// Delay in milliseconds
+#ifndef F_CPU           	// Preprocessor directive allows for conditional
+                        	// compilation. The #ifndef means "if not defined".
+# define F_CPU 16000000 	// CPU frequency in Hz required for delay
+#endif                  	// The #ifndef directive must be closed by #endif
 
 /* Includes ----------------------------------------------------------*/
 /* Include another C language file into the current file at the location
@@ -59,54 +59,54 @@ int main(void)
     // Infinite loop
     while (1)
     {
-		// Message generation
+	// Message generation
         // Pause several milliseconds
         _delay_ms(RESET_DELAY);
 		
-		// Sending "D"
-		PORTB = PORTB | (1<<LED_GREEN);
-		_delay_ms(LONG_DELAY);
-		PORTB = PORTB & ~(1<<LED_GREEN);
-		_delay_ms(SHORT_DELAY);
-		PORTB = PORTB | (1<<LED_GREEN);
-		_delay_ms(SHORT_DELAY);
-		PORTB = PORTB & ~(1<<LED_GREEN);
-		_delay_ms(SHORT_DELAY);
-		PORTB = PORTB | (1<<LED_GREEN);
-		_delay_ms(SHORT_DELAY);
-		PORTB = PORTB & ~(1<<LED_GREEN);
-		
-		// Pause several milliseconds
-		_delay_ms(PAUSE_DELAY);
-		
-		// Sending "E"
-		PORTB = PORTB | (1<<LED_GREEN);
-		_delay_ms(SHORT_DELAY);
-		PORTB = PORTB & ~(1<<LED_GREEN);
-		
-		// Pause several milliseconds
-		_delay_ms(PAUSE_DELAY);
-		
-		// Sending "2"
-		PORTB = PORTB | (1<<LED_GREEN);
-		_delay_ms(SHORT_DELAY);
-		PORTB = PORTB & ~(1<<LED_GREEN);
-		_delay_ms(SHORT_DELAY);
-		PORTB = PORTB | (1<<LED_GREEN);
-		_delay_ms(SHORT_DELAY);
-		PORTB = PORTB & ~(1<<LED_GREEN);
-		_delay_ms(SHORT_DELAY);
-		PORTB = PORTB | (1<<LED_GREEN);
-		_delay_ms(LONG_DELAY);
-		PORTB = PORTB & ~(1<<LED_GREEN);
-		_delay_ms(SHORT_DELAY);
-		PORTB = PORTB | (1<<LED_GREEN);
-		_delay_ms(LONG_DELAY);
-		PORTB = PORTB & ~(1<<LED_GREEN);
-		_delay_ms(SHORT_DELAY);
-		PORTB = PORTB | (1<<LED_GREEN);
-		_delay_ms(LONG_DELAY);
-		PORTB = PORTB & ~(1<<LED_GREEN);
+	// Sending "D"
+	PORTB = PORTB | (1<<LED_GREEN);
+	_delay_ms(LONG_DELAY);
+	PORTB = PORTB & ~(1<<LED_GREEN);
+	_delay_ms(SHORT_DELAY);
+	PORTB = PORTB | (1<<LED_GREEN);
+	_delay_ms(SHORT_DELAY);
+	PORTB = PORTB & ~(1<<LED_GREEN);
+	_delay_ms(SHORT_DELAY);
+	PORTB = PORTB | (1<<LED_GREEN);
+	_delay_ms(SHORT_DELAY);
+	PORTB = PORTB & ~(1<<LED_GREEN);
+	
+	// Pause several milliseconds
+	_delay_ms(PAUSE_DELAY);
+	
+	// Sending "E"
+	PORTB = PORTB | (1<<LED_GREEN);
+	_delay_ms(SHORT_DELAY);
+	PORTB = PORTB & ~(1<<LED_GREEN);
+	
+	// Pause several milliseconds
+	_delay_ms(PAUSE_DELAY);
+	
+	// Sending "2"
+	PORTB = PORTB | (1<<LED_GREEN);
+	_delay_ms(SHORT_DELAY);
+	PORTB = PORTB & ~(1<<LED_GREEN);
+	_delay_ms(SHORT_DELAY);
+	PORTB = PORTB | (1<<LED_GREEN);
+	_delay_ms(SHORT_DELAY);
+	PORTB = PORTB & ~(1<<LED_GREEN);
+	_delay_ms(SHORT_DELAY);
+	PORTB = PORTB | (1<<LED_GREEN);
+	_delay_ms(LONG_DELAY);
+	PORTB = PORTB & ~(1<<LED_GREEN);
+	_delay_ms(SHORT_DELAY);
+	PORTB = PORTB | (1<<LED_GREEN);
+	_delay_ms(LONG_DELAY);
+	PORTB = PORTB & ~(1<<LED_GREEN);
+	_delay_ms(SHORT_DELAY);
+	PORTB = PORTB | (1<<LED_GREEN);
+	_delay_ms(LONG_DELAY);
+	PORTB = PORTB & ~(1<<LED_GREEN);
     }
 
     // Will never reach this
