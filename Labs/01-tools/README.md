@@ -21,7 +21,7 @@ I believe that I will eventually get to try out the Logic Analzyer in the upcomi
 ### AVR tools
 ![AVR Tools on desktop](Images/AVR_Tools.PNG)
 
-### Copy of modifed `main.c` file
+### Copy of modified `main.c` file
 ```C
 #define LED_GREEN   PB5 // AVR pin where green LED is connected
 #define RESET_DELAY	4000	// Delay in milliseconds
