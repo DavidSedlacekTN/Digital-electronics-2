@@ -10,6 +10,7 @@ I have downloaded all the necessary files and logged into my GitHub account.
 - [x] Install and try out Atmel Studio 7 for Windows. Open LED example project. 
 - [x] Install and open SimulIDE.
 - [ ] Try out the Logic Analzyer device.
+
 I believe that I will eventually get to try out the Logic Analzyer in the upcoming weeks.
 
 ## Individual tasks
@@ -115,4 +116,5 @@ int main(void)
 
 ### Circuit simulation
 ![SimulIDE Simulation](Images/SimulIDE_Circuit.PNG)
+
 You can view the simulation by downloading the `SimulIDE_Circuit.simu` file from this directory. 
