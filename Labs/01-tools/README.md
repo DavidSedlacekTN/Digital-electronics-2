@@ -4,7 +4,16 @@
 I have downloaded all the necessary files and logged into my GitHub account.
 
 ## Lesson tasks
-1. I read through one of the GitHub manuals attached to the task.
-2. I have synchronized my local PC repository with my Github Account.
-3. I have chosen to use Atmel Studio 7 for Windows as my main workspace.
-4. I checked out SimulIDE.
+- [x] Read through one of the GitHub manuals attached to the task.
+- [x] Synchronize my local PC repository with my Github Account.
+- [x] Install and try out Atmel Studio 7 for Windows. Open LED example project. 
+- [x] Install and open SimulIDE.
+- [ ] Try out the Logic Analzyer device.
+I believe that I will eventually get to try out the Logic Analzyer in the upcoming weeks.
+
+## Individual tasks
+- [x] Download AVR development tools on my PC.
+- [x] Create an algorithm that repeatedly displays DE2 in Morse code using led on the UNO Board.
+- [x] Simulate the UNO circuit in SimulIDE.
+
+### AVR tools
