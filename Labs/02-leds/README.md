@@ -1,5 +1,7 @@
-# Lab 2: Control of GPIO, LED, push button
-The purpose of this laboratory exercise is to learn how to use basic input/output devices such as LEDs (Light Emitting Diodes) and push buttons, and how to control GPIO (General Purpose Input Output) pins with help of control registers.
+# Lab 2: David Sedláček
+
+Link to my Github repository:
+https://github.com/DavidSedlacekTN/Digital-electronics-2
 
 ## Preparation tasks
 
@@ -23,15 +25,15 @@ Images were taken from [openwrt.org documentation](https://openwrt.org/).
 
 | **PORTB** | **Description** |
 | :-: | :-- |
-| 0 | Output Low value |
-| 1 | Output High value |
+| 0 | Output Low value(Sink) |
+| 1 | Output High value(Source) |
 
 | **DDRB** | **PORTB** | **Direction** | **Internal pull-up resistor** | **Description** |
 | :-: | :-: | :-: | :-: | :-- |
-| 0 | 0 | input | no | Tri-state, high-impedance |
-| 0 | 1 | input | yes | Port xn will source current if ext. pulled low |
-| 1 | 0 | output | no | Output Low |
-| 1 | 1 | output | no | Output High |
+| 0 | 0 | Input | No | Tri-state, high-impedance |
+| 0 | 1 | Input | Yes | Port xn will source current if ext. pulled low |
+| 1 | 0 | Output | No | Output Low |
+| 1 | 1 | Output | No | Output High |
 
 | **Port** | **Pin** | **Input/output usage?** |
 | :-: | :-: | :-- |
@@ -61,5 +63,77 @@ Images were taken from [openwrt.org documentation](https://openwrt.org/).
 |   | 6 | Yes (Arduino pin 6) |
 |   | 7 | Yes (Arduino pin 7) |
 
+## Part 2: Blinking LEDs
+```C
+int main(void)
+{
+	// Green LED at port B
+	// Set pin as output in Data Direction Register...
+	DDRB = DDRB | (1<<LED_GREEN_1);
+	// ...and turn LED off in Data Register
+	PORTB = PORTB & ~(1<<LED_GREEN_1);
 
+	// Configure the second LED at port C
+	// Set pin as output in Data Direction Register...
+	DDRC = DDRC | (1<<LED_GREEN_2);
+	// ...and turn LED off in Data Register
+	PORTC = PORTC & ~(1<<LED_GREEN_2);
 
+	// Infinite loop
+	while (1)
+	{
+		// Pause several milliseconds
+		_delay_ms(BLINK_DELAY);
+
+		PORTB = PORTB ^ (1<<LED_GREEN_1);
+		PORTC = PORTC ^ (1<<LED_GREEN_2);
+	}
+
+	// Will never reach this
+	return 0;
+}
+```
+![Bliking Leds](Images/Blinking_Leds.PNG)
+
+## Part 3: Blinking LEDs with Button
+```C
+int main(void)
+{
+    // Green LED at port B
+    // Set pin as output in Data Direction Register...
+    DDRB = DDRB | (1<<LED_GREEN_1);
+    // ...and turn LED off in Data Register
+    PORTB = PORTB & ~(1<<LED_GREEN_1);
+
+    // Configure the second LED at port C
+	DDRC = DDRC | (1<<LED_GREEN_2);
+	PORTC = PORTC & ~(1<<LED_GREEN_2);
+
+    // Configure Push button at port D and enable internal pull-up resistor
+	DDRD = DDRD & ~(1<<BUTTON);
+	PORTD = PORTD | (1<<BUTTON);
+
+    // Infinite loop
+    while (1)
+    {
+        // Pause several milliseconds
+        _delay_ms(BLINK_DELAY);
+
+        // WRITE YOUR CODE HERE	
+	if(bit_is_clear(PIND, BUTTON))
+	{
+		PORTB = PORTB ^ (1<<LED_GREEN_1);
+		PORTC = PORTC ^ (1<<LED_GREEN_2);
+		//loop_until_bit_is_set(PIND, BUTTON); // Only when I want to change LED values on button press
+	}
+		
+    }
+
+    // Will never reach this
+    return 0;
+}
+```
+![Bliking Leds with Button](Images/Blinking_Leds_With_Button.PNG)
+
+## Part 4: Night Rider Schematic
+![Night raider schematic](Images/Night_Raider.PNG)
