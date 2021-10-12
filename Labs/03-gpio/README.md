@@ -15,7 +15,7 @@ https://github.com/DavidSedlacekTN/Digital-electronics-2
 | `float`    | 32 | -3.4e+38, ..., 3.4e+38 | Single-precision floating-point |
 | `void`     | 0 | 0 | Empty value |
 
-2. Any function in C contains a declaration (function prototype), a definition (block of code, body of the function); each declared function can be executed (called). Study [this article](https://www.programiz.com/c-programming/c-user-defined-functions) and complete the missing sections in the following user defined function declaration, definition, and call.
+2. Functions
 
 ```C
 #include <avr/io.h>
@@ -49,3 +49,48 @@ uint16_t calculate(uint8_t x, uint8_t y)
     return result;
 }
 ```
+
+3. GPIO Library
+
+Function declaration - Just specifies the name, parameters and return type of a function and does not have inners.
+Function definition - It has its inners. It contains a block of code that is supposed to be executed after calling of the function.
+
+```C
+#define LED_GREEN_1   PB5
+#define LED_GREEN_2   PC5
+#define BUTTON_INPUT PD5
+#include "gpio.h" 
+
+int main(void)
+{
+    // Green LED at port B
+    GPIO_config_output(&DDRB, LED_GREEN_1);
+    GPIO_write_low(&PORTB, LED_GREEN_1);
+
+    // Configure the second LED at port C
+	GPIO_config_output(&DDRC, LED_GREEN_2);
+	GPIO_write_low(&PORTC, LED_GREEN_2);
+
+    // Configure Push button at port D and enable internal pull-up resistor
+	GPIO_config_input_pullup(&DDRD, BUTTON_INPUT);
+
+    // Infinite loop
+    while (1)
+    {
+        // Pause several milliseconds
+        _delay_ms(BLINK_DELAY);
+
+		if (GPIO_read(&PIND, BUTTON_INPUT) == 0) {
+			GPIO_toggle(&PORTB, LED_GREEN_1);
+			GPIO_toggle(&PORTC, LED_GREEN_2);
+		}
+    }
+
+    // Will never reach this
+    return 0;
+}
+```
+![Image of the circuit](Images/Circuit_1.PNG)
+
+4. Traffic light
+![Image of the traffic circuit](Images/Circuit_2.PNG)
