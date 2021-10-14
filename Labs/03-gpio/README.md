@@ -21,7 +21,7 @@ https://github.com/DavidSedlacekTN/Digital-electronics-2
 #include <avr/io.h>
 
 // Function declaration (prototype)
-uint16_t calculate(uint8_t, uint8_t);
+uint16_t calculate(uint8_t x, uint8_t y);
 
 int main(void)
 {
