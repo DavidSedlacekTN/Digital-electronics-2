@@ -52,6 +52,9 @@
 
 ## 5. Timer Library
 
+Function - is called and runs within my main program.
+Interrupt service rutine - is called when an pre-defined event heppens and runs within the interrupt handler.
+
 ### 5.1 Header files listing, which defines settings for Timer/Counter0 & Timer/Counter2:
 ```c
 /**
@@ -153,6 +156,10 @@ ISR(TIMER1_OVF_vect)
 ```
 ![5.2 Test Circuit](Images/Circuit_1.PNG)
 
-## 5. Knight Rider
+### 5.3 Flowchart
+
+![5.3 Flowchart](Images/Flowchart.png)
+
+## 6. Knight Rider
 
 ![Knight Rider Schematic](Images/Circuit_2.PNG)
