@@ -81,21 +81,21 @@
  * @name  Definitions for 8-bit Timer/Counter2
  * @note  t_OVF = 1/F_CPU * prescaler * 2^n where n = 8, F_CPU = 16 MHz
  */
-#define TIM0_stop()           TCCR2B &= ~((1<<CS22) | (1<<CS21) | (1<<CS20));
+#define TIM2_stop()           TCCR2B &= ~((1<<CS22) | (1<<CS21) | (1<<CS20));
 /** @brief Set overflow 4ms, prescaler 001 --> 1 */
-#define TIM0_overflow_4ms()   TCCR2B &= ~((1<<CS22) | (1<<CS21)); TCCR2B |= (1<<CS20);
+#define TIM2_overflow_4ms()   TCCR2B &= ~((1<<CS22) | (1<<CS21)); TCCR2B |= (1<<CS20);
 /** @brief Set overflow 33ms, prescaler 010 --> 8 */
-#define TIM0_overflow_33ms()  TCCR2B &= ~((1<<CS22) | (1<<CS20)); TCCR2B |= (1<<CS21);
+#define TIM2_overflow_33ms()  TCCR2B &= ~((1<<CS22) | (1<<CS20)); TCCR2B |= (1<<CS21);
 /** @brief Set overflow 262ms, prescaler 011 --> 64 */
-#define TIM0_overflow_262ms() TCCR2B &= ~(1<<CS22); TCCR2B |= (1<<CS21) | (1<<CS20);
+#define TIM2_overflow_262ms() TCCR2B &= ~(1<<CS22); TCCR2B |= (1<<CS21) | (1<<CS20);
 /** @brief Set overflow 1s, prescaler 100 --> 256 */
-/*#define TIM0_overflow_1s()    TCCR2B &= ~((1<<CS21) | (1<<CS20)); TCCR2B |= (1<<CS22);*/ // Not possible
+/*#define TIM2_overflow_1s()    TCCR2B &= ~((1<<CS21) | (1<<CS20)); TCCR2B |= (1<<CS22);*/ // Not possible
 /** @brief Set overflow 4s, prescaler // 101 --> 1024 */
-/*#define TIM0_overflow_4s()    TCCR2B &= ~(1<<CS21); TCCR2B |= (1<<CS22) | (1<<CS20);*/ // Not possible
+/*#define TIM2_overflow_4s()    TCCR2B &= ~(1<<CS21); TCCR2B |= (1<<CS22) | (1<<CS20);*/ // Not possible
 /** @brief Enable overflow interrupt, 1 --> enable */
-#define TIM0_overflow_interrupt_enable()  TIMSK2 |= (1<<TOIE2);
+#define TIM2_overflow_interrupt_enable()  TIMSK2 |= (1<<TOIE2);
 /** @brief Disable overflow interrupt, 0 --> disable */
-#define TIM0_overflow_interrupt_disable() TIMSK2 &= ~(1<<TOIE2);
+#define TIM2_overflow_interrupt_disable() TIMSK2 &= ~(1<<TOIE2);
 
 /** @} */
 

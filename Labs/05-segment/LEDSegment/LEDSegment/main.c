@@ -68,11 +68,11 @@ ISR(TIMER1_OVF_vect)
 		ones = ones + 1;
 	}
 	else {
-		if (tens < 6) {
-			tens = tens + 1;	
+		if (tens == 5) {
+			tens = 0;	
 		}
 		else {
-			tens = 0;
+			tens = tens + 1;
 		}
 		ones = 0;
 	}

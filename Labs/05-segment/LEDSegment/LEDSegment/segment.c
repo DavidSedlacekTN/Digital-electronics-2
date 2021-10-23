@@ -149,7 +149,38 @@ void SEG_update_shift_regs(uint8_t segments, uint8_t position)
 /**********************************************************************
  * Function: SEG_clear()
  **********************************************************************/
+void SEG_clear(void) {
+	
+	uint8_t bit_number;
+	
+    // Pull LATCH, CLK low & DATA high
+    GPIO_write_low(&PORTD, SEG_LATCH);
+    GPIO_write_low(&PORTD, SEG_CLK);
+    GPIO_write_high(&PORTB, SEG_DATA);
+    
+    // Wait 1 us
+    _delay_us(1);
+	
+	for (bit_number = 0; bit_number < 8; bit_number++) {
+		
+		GPIO_write_high(&PORTD, SEG_CLK);
+		_delay_us(1);
+		
+		GPIO_write_low(&PORTD, SEG_CLK);
+		_delay_us(1);
+	}
+	
+	GPIO_write_high(&PORTD, SEG_LATCH);
+	
+	_delay_us(1);
+}
 
 /**********************************************************************
  * Function: SEG_clk_2us()
  **********************************************************************/
+void SEG_clk_2us() {
+	GPIO_write_high(&PORTD, SEG_CLK);
+	_delay_us(1);
+	GPIO_write_low(&PORTD, SEG_CLK);
+	_delay_us(1);
+}
