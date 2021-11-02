@@ -157,4 +157,4 @@ uint8_t customChar[16] = {
 
 1. Scheme of kitchen alarm
 
-   ![Kitchen Alarm](Images/Kitchen_Alarm.PNG)
+   ![Kitchen Alarm](Images/Kitchen_Timer.PNG)
