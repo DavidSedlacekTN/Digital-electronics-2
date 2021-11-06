@@ -96,7 +96,7 @@
 
 ## 2. Picture of UART signal when transmitting three character data `De2`
 
-   ![UART Signal](Images/Wavefrom.png)
+   ![UART Signal](Images/WaveForm.png)
 
 ## 3. Flowchart figure for function `uint8_t get_parity(uint8_t data, uint8_t type)`
 
