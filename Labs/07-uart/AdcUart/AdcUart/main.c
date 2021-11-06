@@ -17,12 +17,29 @@
 #include "lcd.h"            // Peter Fleury's LCD library
 #include <stdlib.h>         // C library. Needed for conversion function
 #include "uart.h"           // Peter Fleury's UART library
+#include <stdio.h>
 
 #ifndef F_CPU
 # define F_CPU 16000000  // CPU frequency in Hz required for UART_BAUD_SELECT
 #endif
 
+
 /* Function definitions ----------------------------------------------*/
+
+uint8_t get_parity(uint8_t data, uint8_t type) {
+	// Imagine 8-bit integer with bits (a b c d e f g h)
+	data ^= (data >> 4); // (a b c d e f g h) ^ (0 0 0 0 a b c d) -> (a b c d ae bf cg dh)
+	data ^= (data >> 2); // (a b c d ae bf cg dh) ^ (0 0 a b c d ae bf) -> (a b ac bd ace bdf aceg bdfh)
+	data ^= (data >> 1); // (a b ac bd ace bdf aceg bdfh) ^ (0 a b ac bd ace bdf aceg) -> (a ab abc abcde abcdef abcdefg abcdefgh)
+	data &= 1;
+	if (type == 0) {
+		return data; // returns 1 when type is set to even parity and has odd number of ones
+	}
+	else if (type == 1) {
+		return (~data); // returns 1 when type is set to odd parity and has even number of ones
+	}
+}
+
 /**********************************************************************
  * Function: Main function where the program execution begins
  * Purpose:  Use Timer/Counter1 and start ADC conversion four times 
@@ -73,6 +90,7 @@ int main(void)
          * inside interrupt service routines ISRs */
     }
 
+		
     // Will never reach this
     return 0;
 }
@@ -83,16 +101,19 @@ int main(void)
  * Purpose:  Use single conversion mode and start conversion four times
  *           per second.
  **********************************************************************/
+
 ISR(TIMER1_OVF_vect)
 {
     // Start ADC conversion
 	ADCSRA |= (1<<ADSC);
 }
 
+
 /**********************************************************************
  * Function: ADC complete interrupt
  * Purpose:  Display value on LCD and send it to UART.
  **********************************************************************/
+
 ISR(ADC_vect)
 {
     uint16_t value = 0;
@@ -116,5 +137,5 @@ ISR(ADC_vect)
     lcd_gotoxy(13,0); lcd_puts(lcd_string); 
 	
 	lcd_gotoxy(8, 1); lcd_puts("None");
-
 }
+
