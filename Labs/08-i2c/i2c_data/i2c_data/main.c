@@ -19,22 +19,16 @@
 /* Includes ----------------------------------------------------------*/
 #include <avr/io.h>         // AVR device-specific IO definitions
 #include <avr/interrupt.h>  // Interrupts standard C library for AVR-GCC
-#include "timer.h"          // Timer library for AVR-GCC
 #include <stdlib.h>         // C library. Needed for conversion function
+#include "timer.h"          // Timer library for AVR-GCC
 #include "uart.h"           // Peter Fleury's UART library
 #include "twi.h"            // TWI library for AVR-GCC
 
 /* Variables ---------------------------------------------------------*/
 typedef enum {              // FSM declaration
-    /*
-	STATE_IDLE = 1,
+    STATE_IDLE = 1,
     STATE_SEND,
     STATE_ACK
-	*/
-	STATE_IDLE = 1,
-	STATE_HUMID,
-	STATE_TEMP,
-	STATE_CHECK
 } state_t;
 
 /* Function definitions ----------------------------------------------*/
@@ -61,8 +55,7 @@ int main(void)
     sei();
 
     // Put strings to ringbuffer for transmitting via UART
-    // uart_puts("\r\nScan I2C-bus for devices:\r\n");
-	uart_puts("Get Humidity and Temperature:\r\n");
+    uart_puts("\r\nScan I2C-bus for devices:\r\n");
 
     // Infinite loop
     while (1)
@@ -83,62 +76,10 @@ int main(void)
  **********************************************************************/
 ISR(TIMER1_OVF_vect)
 {
-	static state_t state = STATE_IDLE;
-	static uint8_t humid = 0;	
-	static uint8_t temp = 0;
-	char uart_string[2] = "00";
-	uint8_t result = 1;
-	
-	
-	switch(state) {
-	case STATE_IDLE:
-		state = STATE_HUMID;
-		
-	case STATE_HUMID:
-		result = twi_start((184<<1) + TWI_READ);
-		if (result == 0) {
-			uart_puts("Humidity: ");
-			humid = twi_read_ack();
-			itoa(humid, uart_string, 10);
-			uart_puts(uart_string);
-			uart_puts(",");
-			
-			humid = twi_read_ack();
-			itoa(humid, uart_string, 10);
-			uart_puts(uart_string);
-			uart_puts("\r\n");
-			
-			state = STATE_TEMP;
-		}
-		else {
-			// twi_stop();			
-			state = STATE_IDLE;
-		}
-		
-	case STATE_TEMP:
-		uart_puts("Temperature: ");
-		temp = twi_read_ack();
-		itoa(temp, uart_string, 10);
-		uart_puts(uart_string);
-		uart_puts(",");
-		
-		temp = twi_read_nack();
-		itoa(temp, uart_string, 10);
-		uart_puts(uart_string);
-		uart_puts("\r\n");
-		twi_stop();
-		
-		state = STATE_IDLE;
-		
-	default:
-		state = STATE_IDLE;
-		break;
-	}
-	/*
     static state_t state = STATE_IDLE;  // Current state of the FSM
-    static uint8_t addr = 7;            // I2C slave address
-    uint8_t result = 1;                 // ACK result from the bus
-    char uart_string[2] = "00"; // String for converting numbers by itoa()
+    static uint8_t addr = 7;    // I2C slave address
+    uint8_t value;              // Data obtained from the I2C bus
+    char uart_string[] = "00";  // String for converting numbers by itoa()
 
     // FSM
     switch (state)
@@ -147,11 +88,13 @@ ISR(TIMER1_OVF_vect)
     case STATE_IDLE:
         addr++;
         // If slave address is between 8 and 119 then move to SEND state
-		if ((addr > 7) && (addr < 120)) {
+		if ((addr > 7) && (addr < 120)) { // Not specified whether it is including or excluding border numbers. I chose <8; 119> interval.
 			state = STATE_SEND;
 		}
-		
-        break;
+		else {
+			addr = 7; // Loop is not necessary, although is quite helpful in case of connecting other devices during the cycle. 
+		}
+		break;
     
     // Transmit I2C slave address and get result
     case STATE_SEND:
@@ -162,25 +105,25 @@ ISR(TIMER1_OVF_vect)
         // | 7  6  5  4  3  2  1  0 |     ACK    |
         // |a6 a5 a4 a3 a2 a1 a0 R/W|   result   |
         // +------------------------+------------+
-        result = twi_start((addr<<1) + TWI_WRITE);
+        value = twi_start((addr<<1) + TWI_WRITE);
         twi_stop();
-        // Test result from I2C bus. If it is 0 then move to ACK state, 
-        // otherwise move to IDLE 
-		if (result == 0) {
+        /* Test value obtained from I2C bus. If it is 0 then move to ACK
+         * state, otherwise move to IDLE */
+		if (value == 0) {
 			state = STATE_ACK;
 		}
 		else {
 			state = STATE_IDLE;
 		}
-		
         break;
 
     // A module connected to the bus was found
     case STATE_ACK:
         // Send info about active I2C slave to UART and move to IDLE
 		itoa(addr, uart_string, 16);
+		uart_puts("Active address found: ");
 		uart_puts(uart_string);
-		uart_puts("\r\n");
+		uart_puts("/n/r");
 		state = STATE_IDLE;
         break;
 
@@ -189,6 +132,4 @@ ISR(TIMER1_OVF_vect)
         state = STATE_IDLE;
         break;
     }
-	*/
-	
 }
